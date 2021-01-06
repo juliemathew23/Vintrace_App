@@ -1,25 +1,47 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Wines from './components/Wines';
+import Tabs from "./components/Tabs";
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+    class App extends Component {
+      state = {
+             wines: [],
+             details: []
+           }
+
+            componentDidMount() {
+                   fetch('http://localhost:8080/api/search?lot=11YVCHAR001')
+                   .then(res => res.json())
+                   .then((data) => {
+                     this.setState({ wines: data })
+                   })
+                   .catch(console.log)
+
+                 }
+
+      render() {
+         return (
+          <div>
+                  <Wines wines={this.state.wines} />
+                  <Tabs>
+                         <div label="Year">
+                         Test
+                         </div>
+                         <div label="Region">
+                          Test
+                         </div>
+                         <div label="Variety">
+                          Test
+                         </div>
+                         <div label="Year-Variety">
+                          Test
+                         </div>
+                       </Tabs>
+                       </div>
+                )
+      }
+    }
+
+    export default App;
